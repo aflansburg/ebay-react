@@ -1,6 +1,8 @@
-# ebay-node
+# ebay-react
 
 ### Calling the eBay Finding REST API (specifically findCompletedItems endpoint) with Node.js
+
+#### created with create-react-app
 
 `{ keywords: 'rough country jeep yj',
    allItemsCount: 107,
