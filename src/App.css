@@ -1,0 +1,108 @@
+.App {
+  text-align: center;
+}
+
+.loading-img {
+  animation: loading-img-spin infinite 5s linear;
+  height: 80px;
+  margin: 12px auto;
+}
+
+.App-header {
+  background-color: #303030;
+  height: 70px;
+  padding: 20px;
+  color: #dcdcdc;
+}
+
+.App-intro {
+  font-size: 16px;
+}
+
+@keyframes loading-img-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+#searchForm {
+  text-align: center;
+}
+
+.searchLabel {
+    font-family: Consolas, "Lucida Console", sans-serif;
+    font-size: 18px;
+    color: #0b5bb8;
+}
+
+.w3-input {
+    width: 75%;
+    text-align: center;
+    font-family: Consolas, "Lucida Console", sans-serif;
+    margin: 12px auto 12px;
+    font-size: 18px;
+}
+
+.App-h2 {
+    font-family: Consolas, "Lucida Console", sans-serif;
+    font-size: 22px;
+    margin: 0 auto 10px;
+}
+
+.w3-card-4 {
+    font-size: 12px;
+    width: 50%;
+    margin: 1rem auto;
+}
+
+.w3-container {
+    text-align: center;
+    margin: 0 auto;
+    position: relative;
+    font-family: "Trebuchet MS", sans-serif;
+}
+
+.w3-container h1 {
+    font-size: 16px;
+    font-family: "Trebuchet MS", sans-serif;
+}
+
+.loading-msg {
+    margin: 12px auto;
+    width: 50%;
+    text-align: center;
+    font-family: Consolas, "Lucida Console", sans-serif;
+    border: solid #4b4b4b;
+    border-radius: 8px 8px 8px 8px;
+}
+
+.loading-msg p {
+    margin: 0 auto;
+}
+
+.condition-disclaimer {
+    margin: 8px auto;
+    text-align: center;
+    font-style: italic;
+    font-size: 10px;
+    font-family: "Trebuchet MS", sans-serif;
+}
+
+.radio-pane {
+    margin: 8px auto 12px;
+    text-align: center;
+    padding: 8px;
+}
+
+.w3-radio {
+    padding: 8px;
+    margin: 0 8px;
+}
+
+.w3-button {
+    margin: 8px auto 12px;
+}
+
+.cancel-btn {
+    margin: 12px auto;
+    text-align: center;
+}
