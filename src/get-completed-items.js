@@ -38,11 +38,13 @@ async function getCompletedEbayItems(keywords, days, condition) {
   baseUri = baseUri + timeframe + conditionFilter + "&keywords=";
   keywords = keywords.replace(/ /g, '%20');
   let uri = baseUri + keywords;
-  console.log(`uri: ${uri}`);
   let responses = async() => {
     const returnedItems = initialApiCall(uri)
         .then(response => {
           let pageCount = response.data.findCompletedItemsResponse[0].paginationOutput[0].totalPages[0];
+          // limit pagination to 50 from results
+          if (pageCount > 50){ pageCount = 50 };
+          
           // let totalItems = response.data.findCompletedItemsResponse[0].paginationOutput[0].totalEntries[0];
           // console.log('Total completed items: ' + totalItems);
           // console.log('Paginated results: ' + pageCount);

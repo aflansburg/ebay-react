@@ -70,36 +70,73 @@ class NameForm extends Component {
     let items = dh.thisDataHelper.getResults(keywords, 30, condition);
     items
         .then(response => {
-          const analysis = dh.thisDataHelper.returnAnalysis(response);
-          const resultsContent =
-              <div className="w3-card-4">
+          if (response){
+            console.log(response);
+            const analysis = dh.thisDataHelper.returnAnalysis(response);
+            const resultsContent =
+                <div className="w3-card-4">
+        
+                  <header className="w3-container w3-blue">
+                    <h1>Results for "{analysis.keywords}"</h1>
+                  </header>
+        
+                  <div className="w3-container">
+                    <p># of Listings analyzed: {analysis.allItemsCount}</p>
+                    <p>Total # of Sales: {analysis.qtySold}</p>
+                    <p>Average Price: ${analysis.averagePrice.toFixed(2)}</p>
+                    <p>Percent Sold: {analysis.percentSold}</p>
+                    <p>Total $ Sold: ${analysis.totalSold.toFixed(2)}</p>
+                    <p>Date Range: {analysis.dateRange}</p>
+                  </div>
       
-                <header className="w3-container w3-blue">
-                  <h1>Results for "{analysis.keywords}"</h1>
-                </header>
-      
-                <div className="w3-container">
-                  <p>Total Listings: {analysis.allItemsCount}</p>
-                  <p>Total # of Sales: {analysis.qtySold}</p>
-                  <p>Average Price: ${analysis.averagePrice.toFixed(2)}</p>
-                  <p>Percent Sold: {analysis.percentSold}</p>
-                  <p>Total $ Sold: ${analysis.totalSold.toFixed(2)}</p>
-                  <p>Date Range: {analysis.dateRange}</p>
+                </div>;
+            ReactDOM.render(resultsContent, document.getElementById('results-display'));
+            ReactDOM.render(
+                <div className="cancel-btn">
+                  <button className="w3-button w3-green"
+                          onClick={()=>{
+                            this.setState(initialState);
+                            window.location.reload();
+                          }}>
+                    New Search
+                  </button>
                 </div>
-              
-            </div>;
-          ReactDOM.render(resultsContent, document.getElementById('results-display'));
-          ReactDOM.render(
-              <div className="cancel-btn">
-                <button className="w3-button w3-green"
-                        onClick={()=>{
-                          this.setState(initialState);
-                          window.location.reload();
-                        }}>
-                  New Search
-                </button>
-              </div>
-          , document.getElementById('search-form'));
+                , document.getElementById('search-form'));
+          }
+          else {
+            const analysis = dh.thisDataHelper.returnAnalysis(response);
+            const possibleKeywords = getKeywordCombos(analysis.keywords);
+            const keywordsList = possibleKeywords.map((keyword) => {
+              return <li>{keyword}</li>
+            });
+            
+            const noResultsContent =
+                <div className="w3-card-4">
+        
+                  <header className="w3-container w3-blue">
+                    <h1>No results found for "{analysis.keywords}"</h1>
+                  </header>
+        
+                  <div className="w3-container">
+                    <p>Try different keywords or less specific keywords.</p>
+                    <p>For instance, instead of "{analysis.keywords}" perhaps try:</p>
+                    <ul>{keywordsList}</ul>
+                  </div>
+      
+                </div>;
+            ReactDOM.render(noResultsContent, document.getElementById('results-display'));
+            ReactDOM.render(
+                <div className="cancel-btn">
+                  <button className="w3-button w3-green"
+                          onClick={()=>{
+                            this.setState(initialState);
+                            window.location.reload();
+                          }}>
+                    New Search
+                  </button>
+                </div>
+                , document.getElementById('search-form'));
+          }
         })
         .catch(err => {
           console.log(`Error: ${err}`);
@@ -127,6 +164,49 @@ class NameForm extends Component {
         </form>
     );
   }
+}
+
+function getKeywordCombos(keywordString){
+  const regex = /(?:\w+)/g;
+  const str = keywordString;
+  let m;
+  let mArr = [];
+  
+  while ((m = regex.exec(str)) !== null) {
+    // This is necessary to avoid infinite loops with zero-width matches
+    if (m.index === regex.lastIndex) {
+      regex.lastIndex++;
+    }
+    
+    // The result can be accessed through the `m`-variable.
+    m.forEach((match) => {
+      mArr.push(match);
+    });
+  }
+  
+  let len = mArr.length;
+  
+  function* keywordCombos(arr) {
+    function* generateKeywords(offset, combo) {
+      yield combo;
+      for (let i = offset; i < arr.length; i++) {
+        yield* generateKeywords(i + 1, combo.concat(arr[i]));
+      }
+    }
+    yield* generateKeywords(0, []);
+  }
+  
+  let genKeywords = [];
+  for (let combo of keywordCombos(mArr)) {
+    genKeywords.push(combo);
+  }
+  genKeywords = genKeywords.filter(n => {
+    return n.length !== 0 && n.length !== len;
+  });
+  genKeywords = genKeywords.map(keyword=>{
+    return keyword.join(' ');
+    })
+  return genKeywords;
 }
 
 export {App, NameForm};

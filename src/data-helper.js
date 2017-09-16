@@ -6,9 +6,8 @@ const thisDataHelper = {
   
   name: 'dataHelper',
   getResults: function (keywords, days, condition) {
+    // limit search to 30 days for relevancy and expediency
     if (days > 30){
-      // findCompletedItems call does not seem to return much useful
-      // data 30 days back from current date.
       console.log(`Timeframe of ${days} days exceeds` +
       `threshold for useful data return, setting to 30 days.`);
       days = 30;
@@ -41,10 +40,6 @@ const thisDataHelper = {
       total += itemPrice
     });
     let mean = total/items.length;
-    // formatting
-    // total = total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
-    // mean = mean.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
-    
     
     analysis.averagePrice = Number(parseFloat(mean).toFixed(2));
     analysis.totalSold = Number(parseFloat(total).toFixed(2));
