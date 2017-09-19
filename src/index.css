@@ -13,3 +13,7 @@ footer {
     padding: 1rem;
     text-align: center;
 }
+
+footer img {
+    padding: 4px;
+}

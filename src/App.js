@@ -12,7 +12,7 @@ class App extends Component {
           <p className="App-h2">eBayAPI-React</p>
         </div>
         <p className="App-intro">
-          This app is built on Facebook's React + Node.js (v8.5.0) and returns useful information from the eBay API.
+          This app is built on Facebook's React + Node.js (v8.5.0) and returns useful information from the eBay API regarding completed listings (with sales).
         </p>
       </div>
     );
