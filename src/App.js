@@ -20,9 +20,10 @@ class App extends Component {
 }
 
 const initialState = {
-  keywords: '',
-  selectedOption: 'New'
-}
+    keywords: '',
+    selectedOption: 'New',
+    selectedType: 'Auction'
+};
 
 class NameForm extends Component {
   constructor(props) {
@@ -30,14 +31,18 @@ class NameForm extends Component {
     this.state = initialState;
     
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleRadioChange = this.handleRadioChange.bind(this);
+    this.handleConditionRadioChange = this.handleConditionRadioChange.bind(this);
+      this.handleTypeRadioChange = this.handleTypeRadioChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleInputChange(event){
     this.setState({keywords: event.target.value});
   }
-  handleRadioChange(event){
+  handleConditionRadioChange(event){
     this.setState({selectedOption: event.target.value});
+  }
+  handleTypeRadioChange(event){
+      this.setState({selectedType: event.target.value});
   }
   handleSubmit(event){
     ReactDOM.render(
@@ -66,8 +71,9 @@ class NameForm extends Component {
     
     let keywords = this.state.keywords;
     let condition = this.state.selectedOption;
+    let listingType = this.state.selectedType;
     
-    let items = dh.thisDataHelper.getResults(keywords, 30, condition);
+    let items = dh.thisDataHelper.getResults(keywords, 30, condition, listingType);
     items
         .then(response => {
           if (response){
@@ -151,13 +157,33 @@ class NameForm extends Component {
             Search Keywords:
           </label>
           <input className="w3-input w3-border" type="text" value={this.state.keywords} onChange={this.handleInputChange} />
-          <div className="radio-pane">
+          <div className="condition-radio-pane">
+              <h5>Condition</h5>
+              <div className="radio-pane-inner">
             <input className="w3-radio" type="radio" name="condition" value="New"
-                   checked={this.state.selectedOption ==='New'} onChange={this.handleRadioChange} />
+                   checked={this.state.selectedOption ==='New'} onChange={this.handleConditionRadioChange} />
             <label>New</label>
             <input className="w3-radio" type="radio" name="condition" value="Used"
-                   checked={this.state.selectedOption ==='Used'} onChange={this.handleRadioChange} />
+                   checked={this.state.selectedOption ==='Used'} onChange={this.handleConditionRadioChange} />
             <label>Used</label>
+              <input className="w3-radio" type="radio" name="condition" value="Manufacturer Refurbished"
+                     checked={this.state.selectedOption ==='Manufacturer Refurbished'} onChange={this.handleConditionRadioChange} />
+              <label>Manufacturer Refurbished</label>
+              <input className="w3-radio" type="radio" name="condition" value="Seller Refurbished"
+                     checked={this.state.selectedOption ==='Seller Refurbished'} onChange={this.handleConditionRadioChange} />
+              <label>Seller Refurbished</label>
+              </div>
+          </div>
+          <div className="listingType-radio-pane">
+              <h5>Listing Type</h5>
+              <div className="radio-pane-inner-type">
+              <input className="w3-radio" type="radio" name="listingType" value="Auction"
+                     checked={this.state.selectedType ==='Auction'} onChange={this.handleTypeRadioChange} />
+              <label>Auction</label>
+              <input className="w3-radio" type="radio" name="listingType" value="Fixed"
+                     checked={this.state.selectedType ==='Fixed'} onChange={this.handleTypeRadioChange} />
+              <label>Fixed Price</label>
+              </div>
           </div>
           <input className="w3-button w3-green" type="submit" value="Submit" />
           

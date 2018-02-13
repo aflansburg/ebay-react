@@ -1,11 +1,15 @@
-import * as g from './get-completed-items';
+import * as g from './get-completed-auctions';
+import * as f from './get-completed-fixed';
 
 let analysis = {};
+let options = {
+    listingType: 'FixedPrice' // can alternatively be 'Auction' and/or 'AuctionWithBIN'
+};
 
 const thisDataHelper = {
   
   name: 'dataHelper',
-  getResults: function (keywords, days, condition) {
+  getResults: function (keywords, days, condition, listingType) {
     // limit search to 30 days for relevancy and expediency
     if (days > 30){
       console.log(`Timeframe of ${days} days exceeds` +
@@ -13,7 +17,7 @@ const thisDataHelper = {
       days = 30;
     }
     
-    let results = filteredResults(keywords, days, condition)
+    let results = filteredResults(keywords, days, condition, listingType)
         .then(items => {
           if (items.length === 0){
             console.log('No items were found')
@@ -51,9 +55,16 @@ const thisDataHelper = {
   }
 };
 
-async function filteredResults(keywords, days, condition) {
+async function filteredResults(keywords, days, condition, listingType) {
   analysis.keywords = keywords;
-  const results = g.getCompletedEbayItems(keywords, days, condition);
+  let results = '';
+  if (listingType === 'Auction'){
+      results = g.getCompletedEbayItems(keywords, days, condition);
+  }
+  else if (listingType === 'Fixed'){
+    results = f.getCompletedFixedPrice(keywords, days, condition);
+  }
+
   let items = [];
   await results.then(data=>{
     // getting back a lot of garbage with certain searches from eBay API

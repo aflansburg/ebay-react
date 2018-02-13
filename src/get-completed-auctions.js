@@ -23,21 +23,28 @@ function getPageItems(uri, page) {
 }
 
 async function getCompletedEbayItems(keywords, days, condition) {
-  let conditionFilter;
-  if (condition === 'New' || condition === 'Used'){
-     conditionFilter = "&itemFilter(2).name=Condition&itemFilter(2).value="
-                           + condition;
-  }
-  else {
-    console.log('Defaulting condition to "Used" due to invalid parameter!');
-    conditionFilter = "&itemFilter(2).name=Condition&itemFilter(2).value="
-        + 'Used';
-  }
+    let conditionFilter;
+    if (condition === 'New' || condition === 'Used'){
+        conditionFilter = "&itemFilter(2).name=Condition&itemFilter(2).value="
+            + condition;
+    }
+    else if (condition === 'Seller Refurbished'){
+        conditionFilter = "&itemFilter(2).name=Condition&itemFilter(2).value=" + "2500";
+    }
+    else if (condition === 'Manufacturer Refurbished') {
+        conditionFilter = "&itemFilter(2).name=Condition&itemFilter(2).value=" + "2000";
+    }
+    else {
+        console.log('Defaulting condition to "Used" due to invalid parameter!');
+        conditionFilter = "&itemFilter(3).name=Condition&itemFilter(3).value="
+            + 'Used';
+    }
   
   let timeframe = setTimeframe(days);
   baseUri = baseUri + timeframe + conditionFilter + "&keywords=";
   keywords = keywords.replace(/ /g, '%20');
   let uri = baseUri + keywords;
+  console.log(`URI: ${uri}`);
   let responses = async() => {
     const returnedItems = initialApiCall(uri)
         .then(response => {

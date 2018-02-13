@@ -28,6 +28,18 @@
   text-align: center;
 }
 
+/*hr {*/
+    /*color: #4b4b4b;*/
+    /*width: 40%;*/
+    /*height: 30px;*/
+    /*border-style: solid;*/
+    /*border-color: #39383c;*/
+    /*border-width: 0 0 1px 0;*/
+    /*border-radius: 20px;*/
+    /*text-align: center;*/
+    /*margin: 0 auto;*/
+    /*margin-top: -1.2em;*/
+/*}*/
 .searchLabel {
     font-family: Consolas, "Lucida Console", sans-serif;
     font-size: 18px;
@@ -87,15 +99,67 @@
     font-family: "Trebuchet MS", sans-serif;
 }
 
-.radio-pane {
+.condition-radio-pane {
+    margin: 8px auto;
+    text-align: center;
+    padding-bottom: 4px;
+}
+
+.radio-pane-inner {
+    width: 40%;
+    text-align: center;
+    margin: 0 auto;
+    border: #4b4b4b solid 1px;
+    border-radius: 4px 4px 4px 4px;
+}
+
+.radio-pane-inner-type {
+    width: 18%;
+    text-align: center;
+    margin: 0 auto;
+    border: #4b4b4b solid 1px;
+    border-radius: 4px 4px 4px 4px;
+}
+
+.condition-radio-pane h5 {
+    color: #0474ca;
+    font-weight: bold;
+    text-align: center;
+}
+.condition-radio-pane hr {
+    width: 40%;
+    height: 30px;
+    border-style: solid;
+    border-color: #39383c;
+    border-width: 1px 0 0 0;
+    border-radius: 20px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.listingType-radio-pane {
     margin: 8px auto 12px;
     text-align: center;
-    padding: 8px;
+}
+
+.listingType-radio-pane h5 {
+    color: #0474ca;
+    font-weight: bold;
+    text-align: center;
+}
+.listingType-radio-pane hr {
+    width: 40%;
+    height: 30px;
+    border-style: solid;
+    border-color: #39383c;
+    border-width: 1px 0 0 0;
+    border-radius: 20px;
+    text-align: center;
+    margin: 0 auto;
 }
 
 .w3-radio {
-    padding: 8px;
-    margin: 0 8px;
+    margin: 2px 7px 9px;
 }
 
 .w3-button {
