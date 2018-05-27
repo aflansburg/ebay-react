@@ -3,7 +3,7 @@ let axios = require('axios');
 const EBAY_APP_ID = 'AbramFla-0959-4008-950d-e8abb475a969'; // <- replace with your own developer ID
 // eBay base API request URL
 
-let baseUri = "https://34.209.93.35:443/https://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findCompletedItems" +
+let baseUri = "https://cors-anywhere.herokuapp.com//http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findCompletedItems" +
     "&SERVICE-VERSION=1.7.0" +
     "&SECURITY-APPNAME=" + EBAY_APP_ID +
     "&RESPONSE-DATA-FORMAT=JSON" +
