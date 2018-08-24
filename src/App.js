@@ -22,7 +22,8 @@ class App extends Component {
 const initialState = {
     keywords: localStorage.getItem('Keywords') || '',
     selectedOption: localStorage.getItem('SelectedOption') || 'New',
-    selectedType: localStorage.getItem('SelectedType') || 'Auction'
+    selectedType: localStorage.getItem('SelectedType') || 'Auction',
+    timeframe: localStorage.getItem('Timeframe') || '30',
 };
 
 class NameForm extends Component {
@@ -34,6 +35,7 @@ class NameForm extends Component {
     this.handleConditionRadioChange = this.handleConditionRadioChange.bind(this);
     this.handleTypeRadioChange = this.handleTypeRadioChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleTimeframeRadioChange = this.handleTimeframeRadioChange.bind(this);
   }
   handleInputChange(event){
     this.setState({keywords: event.target.value});
@@ -46,6 +48,10 @@ class NameForm extends Component {
   handleTypeRadioChange(event){
       this.setState({selectedType: event.target.value});
       localStorage.setItem('SelectedType', event.target.value);
+  }
+  handleTimeframeRadioChange(event){
+    this.setState({timeframe: event.target.value});
+    localStorage.setItem('Timeframe', event.target.value);
   }
   handleSubmit(event){
     ReactDOM.render(
@@ -75,8 +81,9 @@ class NameForm extends Component {
     let keywords = this.state.keywords;
     let condition = this.state.selectedOption;
     let listingType = this.state.selectedType;
-    
-    let items = dh.thisDataHelper.getResults(keywords, 30, condition, listingType);
+    let timeframe = this.state.timeframe;
+
+    let items = dh.thisDataHelper.getResults(keywords, timeframe, condition, listingType);
     items
         .then(response => {
           if (response){
@@ -181,6 +188,21 @@ class NameForm extends Component {
             <label className="control control--radio">Mfg Refurb
               <input type="radio" name="condition" value="Manufacturer Refurbished" checked={this.state.selectedOption === 'Manufacturer Refurbished'}
                 onChange={this.handleConditionRadioChange} />
+                <div className="control__indicator"></div>
+            </label>
+          </div>
+          </div>
+          <div className ="mid-grp">
+          <div className="control-group">
+            <h4>Timeframe</h4>
+            <label className="control control--radio">30-days
+              <input type ="radio" name="timeframe" value='30' checked={this.state.timeframe === '30'}
+                onChange={this.handleTimeframeRadioChange} />
+                <div className="control__indicator"></div>
+            </label>
+            <label className="control control--radio">60-days
+              <input type ="radio" name="timeframe" value='60' checked={this.state.timeframe === '60'}
+                onChange={this.handleTimeframeRadioChange} />
                 <div className="control__indicator"></div>
             </label>
           </div>

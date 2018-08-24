@@ -46,7 +46,7 @@ async function getCompletedFixedPrice(keywords, days, condition) {
     baseUri = baseUri + timeframe + conditionFilter + "&keywords=";
     keywords = keywords.replace(/ /g, '%20');
     let uri = baseUri + keywords;
-    console.log(`URI: ${uri}`);
+    // console.log(`URI: ${uri}`);
     let responses = async() => {
         const returnedItems = initialApiCall(uri)
             .then(response => {
@@ -75,7 +75,7 @@ async function getCompletedFixedPrice(keywords, days, condition) {
 
 function setTimeframe(days){
     let timeframe = new Date();
-    timeframe.setDate((timeframe.getDate() - days));
+    timeframe.setDate((timeframe.getDate() - parseInt(days)));
     // console.log(`Searching eBay sales back to: ${timeframe.toLocaleString('en-US')}`);
     timeframe = timeframe.toISOString();
     return timeframe;

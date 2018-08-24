@@ -108,7 +108,7 @@
     font-weight: bold;
 }
 
-.left-grp, .right-grp {
+.left-grp, .mid-grp, .right-grp {
     display: inline-block;
 }
 

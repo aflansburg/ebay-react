@@ -1,5 +1,6 @@
 import * as g from './get-completed-auctions';
 import * as f from './get-completed-fixed';
+let outliers = require('outliers');
 
 let analysis = {};
 let options = {
@@ -11,11 +12,11 @@ const thisDataHelper = {
   name: 'dataHelper',
   getResults: function (keywords, days, condition, listingType) {
     // limit search to 30 days for relevancy and expediency
-    if (days > 30){
-      console.log(`Timeframe of ${days} days exceeds` +
-      `threshold for useful data return, setting to 30 days.`);
-      days = 30;
-    }
+    // if (days > 30){
+    //   console.log(`Timeframe of ${days} days exceeds` +
+    //   `threshold for useful data return, setting to 30 days.`);
+    //   days = 30;
+    // }
     
     let results = filteredResults(keywords, days, condition, listingType)
         .then(items => {
@@ -34,17 +35,34 @@ const thisDataHelper = {
   },
   returnAnalysis: (items) => {
     
-    let total = 0;
     if (items === undefined){
       analysis.results = 'No items returned -- try different keywords'
       return analysis
     }
-    items.map(item => {
+    let validatedSets = [];
+
+    items.forEach(item => {
       let itemPrice = Number(parseFloat(item.sellingStatus[0].convertedCurrentPrice[0].__value__).toFixed(2));
-      total += itemPrice
+      // omit titles with the word lot - price is not added to totalx`
+      if (!item.title[0].toLowerCase().includes('lot')){
+        validatedSets.push({title: item.title[0], price: itemPrice})
+      }
     });
+    console.log(validatedSets.length);
+    let trimmedPrices = validatedSets.filter(outliers('price'));
+    console.log(trimmedPrices.length);
+
+    const getTotal = (items, prop) => {
+      return items.reduce( (a, b) =>{
+        return a + b[prop];
+      }, 0);
+    };
+
+    let total = getTotal(trimmedPrices, 'price');
+    // let total = validatedSets.reduce((sum, x,)=> sum + x);
+
     let mean = total/items.length;
-    
+
     analysis.averagePrice = Number(parseFloat(mean).toFixed(2));
     analysis.totalSold = Number(parseFloat(total).toFixed(2));
     analysis.qtySold = items.length;
