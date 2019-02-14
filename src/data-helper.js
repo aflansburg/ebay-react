@@ -85,10 +85,11 @@ async function filteredResults(keywords, days, condition, listingType) {
   await results.then(data=>{
     // getting back a lot of garbage with certain searches from eBay API
     // this checks for undefined object
+    console.log(keywords);
     if (data !== undefined){
       data = data[0].data.findCompletedItemsResponse[0].searchResult[0].item;
       data = data.map(item => {
-        if (item !== undefined && item.title[0].includes(keywords))
+        if (item !== undefined && item.title[0].toLowerCase().includes(keywords.toLowerCase()))
           return item;
       });
     }
