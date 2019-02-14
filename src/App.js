@@ -30,8 +30,6 @@ class NameForm extends Component {
   constructor(props) {
     super(props);
     this.state = initialState;
-
-    console.log(this.state);
     
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleConditionRadioChange = this.handleConditionRadioChange.bind(this);
