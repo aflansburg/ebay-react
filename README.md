@@ -11,3 +11,5 @@ You will need your own eBay developer ID, which you can sign up for -> [here](ht
 A working implementation is [here](https://ebayprice.herokuapp.com/)
 
 ![react frontend](https://github.com/aflansburg/ebay-react/blob/master/app-screenshot.png)
+
+![react frontend](https://github.com/aflansburg/ebay-react/blob/master/app-screenshot-2.png)
