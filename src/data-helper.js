@@ -89,7 +89,14 @@ async function filteredResults(keywords, days, condition, listingType) {
     if (data !== undefined){
       data = data[0].data.findCompletedItemsResponse[0].searchResult[0].item;
       data = data.map(item => {
-        if (item !== undefined && item.title[0].toLowerCase().includes(keywords.toLowerCase()))
+        let title = item.title[0].toLowerCase().split(' ');
+        let vKeywords = keywords.toLowerCase().split(' ');
+        let matchCount = []
+
+        title.forEach(w => vKeywords.includes(w) && matchCount.push(w))
+
+        // not crazy about this fuzzy matching method -- need better fuzzy match/search validation
+        if (item !== undefined && matchCount.length > 0)
           return item;
       });
     }
