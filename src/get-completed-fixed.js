@@ -46,7 +46,7 @@ async function getCompletedFixedPrice(keywords, days, condition) {
     baseUri = baseUri + timeframe + conditionFilter + "&keywords=";
     keywords = keywords.replace(/ /g, '%20');
     let uri = baseUri + keywords;
-    // console.log(`URI: ${uri}`);
+
     let responses = async() => {
         const returnedItems = initialApiCall(uri)
             .then(response => {

@@ -48,9 +48,7 @@ const thisDataHelper = {
         validatedSets.push({title: item.title[0], price: itemPrice})
       }
     });
-    console.log(validatedSets.length);
     let trimmedPrices = validatedSets.filter(outliers('price'));
-    console.log(trimmedPrices.length);
 
     const getTotal = (items, prop) => {
       return items.reduce( (a, b) =>{
@@ -88,16 +86,17 @@ async function filteredResults(keywords, days, condition, listingType) {
     // getting back a lot of garbage with certain searches from eBay API
     // this checks for undefined object
     if (data !== undefined){
+      data = data[0].data.findCompletedItemsResponse[0].searchResult[0].item;
       data = data.map(item => {
-        if (item.data.findCompletedItemsResponse[0].searchResult !== undefined)
-          return item.data.findCompletedItemsResponse[0].searchResult[0].item;
+        if (item !== undefined && item.title[0].includes(keywords))
+          return item;
       });
     }
     if (data.length === 0)
       return
-    data = data.reduce((a,b)=>{
-      return a.concat(b);
-    });
+    // data = data.reduce((a,b)=>{
+    //   return a.concat(b);
+    // });
     analysis.allItemsCount = data.length;
     // console.log('# of unfiltered items: ' + data.length);
     
